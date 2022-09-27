@@ -7,7 +7,7 @@ let router = express.Router();
 router
   .route("/books")
   .get((req, res) => {
-    res.send("This is GET request and url is /items/books");
+    res.json("This is GET request and url is /items/books");
   })
   .post((req, res) => {
     res.send("Post request. Url /items/books ...");

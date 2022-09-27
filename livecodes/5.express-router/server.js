@@ -1,18 +1,26 @@
 import express from "express";
+import cors from "cors";
 //import { auth } from "./middleware/auth.js";
 import items from "./routes/items.js";
+
+import toys from "./routes/products.js";
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
 });
 
 //GET and POST
+// http://localhost:5000/items
 app.use("/items", items);
+
+//http://localhost:5000/products
+app.use("/products", toys);
 // app
 //   .route("/items/books")
 //   .get((req, res) => {})
@@ -39,4 +47,6 @@ app.use("/items", items);
 //   res.send(`The user id is: ${id}`);
 // });
 
-app.listen(5000, () => console.log("Port is listening: 5000"));
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => console.log("Port is listening: ", port));
