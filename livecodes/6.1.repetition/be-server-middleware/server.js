@@ -1,6 +1,14 @@
 import express from "express";
-import { validationResponse } from "./controllers/userController.js";
+import {
+  validationResponse,
+  sanitizeResponse,
+} from "./controllers/userController.js";
 import { isAdult, validateKeys } from "./middleware/validation.js";
+import {
+  sanitizeName,
+  stringstoNumbers,
+  sortBands,
+} from "./middleware/sanitization.js";
 
 const app = express();
 
@@ -10,7 +18,13 @@ app.use(express.json());
 
 //ROUTES
 app.post("/validateuser", isAdult, validateKeys, validationResponse);
-//app.post("/sanitizeuser", controller2)
+app.post(
+  "/sanitizeuser",
+  sanitizeName,
+  stringstoNumbers,
+  sortBands,
+  sanitizeResponse,
+);
 
 //Global Error handler
 app.use((err, req, res, next) => {

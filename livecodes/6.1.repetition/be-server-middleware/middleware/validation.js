@@ -9,3 +9,12 @@ export const isAdult = (req, res, next) => {
 };
 
 //validatekey function
+export const validateKeys = (req, res, next) => {
+  const { firstName, lastName, age, fbw, email } = req.body;
+
+  if (!firstName || !lastName || !age || !fbw || !email) {
+    const error = new Error("Looks like you are missing the required fields");
+    next(error);
+  }
+  next();
+};

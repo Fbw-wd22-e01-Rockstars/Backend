@@ -3,3 +3,6 @@ export const validationResponse = (req, res) => {
 };
 
 //sanitizeresponse
+export const sanitizeResponse = (req, res) => {
+  res.json(req.body);
+};
