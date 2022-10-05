@@ -1,0 +1,17 @@
+{
+  "name": "record-shop-project",
+  "version": "1.0.0",
+  "description": "Most applications made for the web have to do with some sort of data manipulation. In order to be able to manipulate our data we have to do two things first:",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "lowdb": "^3.0.0"
+  }
+}
