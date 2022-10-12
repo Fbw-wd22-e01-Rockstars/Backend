@@ -8,6 +8,7 @@ const Form = ({ getPosts }) => {
     title: "",
     message: "",
     name: "",
+    age: "",
   });
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const Form = ({ getPosts }) => {
   const clear = () => {
     setPostData({
       title: "",
+      age: "",
       message: "",
       name: "",
     });
@@ -62,6 +64,16 @@ const Form = ({ getPosts }) => {
           style={{ marginBottom: "10px" }}
           value={postData.name}
           onChange={(e) => setPostData({ ...postData, name: e.target.value })}
+        />
+
+        <TextField
+          name="age"
+          variant="outlined"
+          label="Age"
+          fullWidth
+          style={{ marginBottom: "10px" }}
+          value={postData.age}
+          onChange={(e) => setPostData({ ...postData, age: e.target.value })}
         />
 
         <Button

@@ -20,8 +20,11 @@ const Posts = ({ posts, getPosts }) => {
       {posts?.data?.map((post) => {
         return (
           <Box style={{ display: "inline-block", padding: "20px" }}>
-            <Card style={{ width: "200px" }}>
+            <Card style={{ width: "250px" }}>
               <CardContent>
+                <Typography variant="body2">
+                  <b>Title:</b> {post.title}
+                </Typography>
                 <Typography
                   sx={{ fontSize: 14 }}
                   color="text.secondary"
