@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 app.use("/posts", postRoutes);
 
 mongoose
-  .connect("mongodb://localhost:27017/apple")
+  .connect(process.env.CONNECTION_URL)
   .then(() =>
     app.listen(port, console.log(`DB connected and listening on ${port} port`)),
   )
