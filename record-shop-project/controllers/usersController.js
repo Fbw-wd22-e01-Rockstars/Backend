@@ -26,6 +26,7 @@
 
 // ----------- mongoose ------------------
 import userModel from "../models/userModel.js";
+import { validationResult } from "express-validator";
 // -----------------------------------------
 
 //Controllers
@@ -144,6 +145,11 @@ export const addUser = async (req, res, next) => {
   //   res.status(200).json(user);
   // });
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
     const user = new userModel(req.body);
     await user.save();
     res.status(200).json(user);
