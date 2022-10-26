@@ -46,3 +46,46 @@ export const userSignup = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+export const userLogin = async (req, res) => {
+  //Code here
+
+  try {
+    const { email, password } = req.body;
+    //User exists?
+    let user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ msg: "User not exists!" });
+    }
+
+    //Password isMatch?
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ msg: "Password incorrect!" });
+    }
+
+    //Create a payload
+    const payload = {
+      user: {
+        id: user._id,
+        name: user.firstName,
+      },
+    };
+
+    //Create a token and send
+    jwt.sign(payload, "randomString", { expiresIn: "1h" }, (err, token) => {
+      if (err) throw err;
+      res.status(200).json({ token, msg: "OK" });
+    });
+  } catch (error) {}
+};
+
+export const loggedIn = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user.id).select("-password -__v");
+    res.json(user);
+  } catch (error) {
+    res.send(error.message);
+  }
+};
