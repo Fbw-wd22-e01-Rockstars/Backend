@@ -1,3 +1,13 @@
+## TASK 07 - AUTHENTICATION
+
+Our app works well up until now but it’s not secure at all at the moment. Anybody can delete another users account using their id, passwords are not hashed so they are easy to be compromised and there is no authentication taking place anywhere. We will set up a way to authenticate each call using Json Web Tokens, so each user can manage only information created by them.
+
+**TODO**
+
+1. Return a token every time a user is created.
+2. Write a middleware to authenticate all endpoints of our app using the token above.
+3. Hash the password while user creation and login.
+
 ## TASK 06 - VALIDATION AND SANITIZATION
 
 In this task we will introduce data validation. How we will we know that the format of the email the user inserted is valid? Using `express-validator` we will validate our data before we save them in our database. If something is not valid, we will return a detailed error message to the user. After validation, we will sanitize our data using `express-validator`. Validation is about making sure our data are in the right format. Sanitzation though is all about making sure the data are also noise-free. No extra spaces, no uppercase mixed with lowercase, normalized emails etc.

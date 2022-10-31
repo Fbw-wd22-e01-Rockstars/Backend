@@ -27,6 +27,9 @@
 // ----------- mongoose ------------------
 import userModel from "../models/userModel.js";
 import { validationResult } from "express-validator";
+
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 // -----------------------------------------
 
 //Controllers
@@ -150,10 +153,78 @@ export const addUser = async (req, res, next) => {
       return res.status(422).json({ errors: errors.array() });
     }
 
-    const user = new userModel(req.body);
-    await user.save();
-    res.status(200).json(user);
+    const { firstName, lastName, email, password } = req.body;
+    //Check if user already exists
+    let existingUser = await userModel.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({ msg: "User already exists!" });
+    }
+
+    //Create a new user (don't save yet)
+    const newUser = new userModel({
+      firstName,
+      lastName,
+      email,
+      password, //"passeword": "1234"
+    });
+
+    //hash the password for the new user
+    const salt = await bcrypt.genSalt(10);
+    newUser.password = await bcrypt.hash(password, salt);
+
+    //save user into DB
+    await newUser.save();
+
+    //response to FE
+    //res.status(200).json(newUser);
+
+    //Create a payload
+    const payload = {
+      id: newUser._id,
+      name: newUser.firstName,
+    };
+
+    //Create a token and send
+    jwt.sign(payload, "randomString", { expiresIn: "1h" }, (err, token) => {
+      if (err) throw err;
+      res.status(200).json({ token, msg: "OK" });
+    });
   } catch (e) {
     next(e);
   }
+};
+
+export const userLogin = async (req, res) => {
+  //Code here
+
+  try {
+    const { email, password } = req.body;
+    //User exists?
+    let user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ msg: "User not exists!" });
+    }
+
+    //Password isMatch?
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ msg: "Password incorrect!" });
+    }
+
+    //Create a payload
+    const payload = {
+      user: {
+        id: user._id,
+        name: user.firstName,
+      },
+    };
+
+    //Create a token and send
+    jwt.sign(payload, "randomString", { expiresIn: "1h" }, (err, token) => {
+      if (err) throw err;
+      res.status(200).json({ token, msg: "OK" });
+    });
+  } catch (error) {}
 };

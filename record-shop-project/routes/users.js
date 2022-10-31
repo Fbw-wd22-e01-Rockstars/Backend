@@ -10,10 +10,19 @@ import {
   getUser,
   getUsers,
   updateUser,
+  userLogin,
 } from "../controllers/usersController.js";
 
-router.route("/").get(getUsers).post(validateInputs(userRules), addUser);
+import auth from "../middleware/auth.js";
 
-router.route("/:id").get(getUser).delete(deleteUser).put(updateUser);
+router.route("/").get(auth, getUsers).post(validateInputs(userRules), addUser);
+
+router
+  .route("/:id")
+  .get(auth, getUser)
+  .delete(auth, deleteUser)
+  .put(auth, updateUser);
+
+router.post("/login", userLogin);
 
 export default router;
