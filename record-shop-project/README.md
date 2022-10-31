@@ -1,3 +1,16 @@
+## Task 08 - Relations
+
+Relations relation relations. The fact is that MongoDB is a NoSQL database. It means that it is non-relational, among other things. To implement a kind of relations between documents, we use references by IDs or embed documents directly. In the task we will update our code in order to create relations between our models. We can see that an order contains the id of a record but when we retreat an order we only see the id and not the data of the record as well.
+
+**Story**: Our client, the record store, would like to be able to have the addresses of each user in a specific format. They would also like to see the data of a record when an order is being retrieved so they can make their shopping cart look nice.
+
+**TODO**
+
+1. Create a new schema called address containing a street and a city.
+2. Connect the address schema with our user schema.
+3. Update your controllers so when you create/delete/post/retrieve a new user, a new address will be created/deleted/posted/retrieved as well.
+4. Using refs, connect the record schema with the order one.
+
 ## TASK 07 - AUTHENTICATION
 
 Our app works well up until now but it’s not secure at all at the moment. Anybody can delete another users account using their id, passwords are not hashed so they are easy to be compromised and there is no authentication taking place anywhere. We will set up a way to authenticate each call using Json Web Tokens, so each user can manage only information created by them.

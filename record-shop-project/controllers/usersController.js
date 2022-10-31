@@ -153,7 +153,7 @@ export const addUser = async (req, res, next) => {
       return res.status(422).json({ errors: errors.array() });
     }
 
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, address } = req.body;
     //Check if user already exists
     let existingUser = await userModel.findOne({ email });
 
@@ -167,6 +167,7 @@ export const addUser = async (req, res, next) => {
       lastName,
       email,
       password, //"passeword": "1234"
+      address,
     });
 
     //hash the password for the new user
