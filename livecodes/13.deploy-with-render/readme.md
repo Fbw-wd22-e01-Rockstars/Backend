@@ -63,7 +63,7 @@ Now we are ready To deploy a Node.js application, click on the New Web Service b
 
 - environment: `node`
 - Branch : the default branch in this example is main
-- build command: `npm`
+- build command: `npm install`
 - start command:enter `node app.js` as the value, if your entry file is `app.js`.  
 
 ![web-service](./img/web-service3.png)
